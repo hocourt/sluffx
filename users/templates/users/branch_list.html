@@ -1,0 +1,106 @@
+{% extends "mysite/base.html" %}
+
+{% block content %}
+      {% if activeperson.status >= 35 %}
+        <a class="btn btn-default" href="{% url 'memberinsert' %}" >Add a member</span></a>
+      {% endif %}
+      <a class="btn btn-default" href="{% url 'eventlist' 'current' %}"> View Events</a>
+      {% if activeperson.status >= 20 %}
+      <a class="btn btn-default" href="{% url 'usercolours' type='get' color='get' whence='users' %}">
+      <span>Colours</span></a>
+      {% endif %}
+      <h2 class ='item'>Branches</h2>
+
+      <table>
+      {% for x in branches %}
+      {% if x.status >= 20 %}
+          <tr>
+
+          {% if activeperson.status >= 40 %}
+              <td>&nbsp;&nbsp;<a class="item" href="{% url 'memberdetail' pk=x.pk %}">{{ x.display_name }}&nbsp;</a></td>
+              <td>{{ x.authorname }}&nbsp;</td>
+          {% else %}
+              <td>&nbsp;&nbsp;{{ x.display_name }}&nbsp;</td>
+          {% endif %}
+          {% if activeperson.status >= 40 %}
+              <td>{{ x.last_login|date:"jS F Y" }}&nbsp;</td>
+          {% endif %}
+
+{% comment %}
+          {% if activeperson.status >= 60 %}
+            {% if x.status == 20 %}
+              <td><span style='color: #00C0C0;'>member</span>&nbsp;</td>
+            {% elif x.status == 30 %}
+              <td><span style='color: #00C080;'>planner</span>&nbsp;</td>
+            {% elif x.status == 35 %}
+              <td><span style='color: #00C000;'>recruiter</span>&nbsp;</span></td>
+             {% elif x.status == 40 %}
+              <td><span style='color: #C0C000;'>committee</span>&nbsp;</td>
+             {% elif x.status == 50 %}
+              <td><span style='color: #C08000;'>treasurer</span>&nbsp;</td>
+             {% elif x.status == 60 %}
+              <td><span style='color: #C00000;'>admin</span>&nbsp;</td>
+            {% endif %}
+          {% endif %}
+{% endcomment %}
+
+          {% if activeperson.status >= 35 %}
+              {% if activeperson.username == x.authorname or activeperson.status >= 60 %}
+                 <td><a class="btn btn-default" href="{% url 'memberdelete' pk=x.pk confirmed='no' %}">
+                 <span>Remove</span></a></td>
+              {% endif %}
+          {% endif %}
+          </tr>
+        {% endif %}
+      {% endfor %}
+      </table>
+
+
+ {% if activeperson.status >= 60 %}
+      <h2 class ='item'>Non members</h2>
+
+      <table>
+
+      {% for x in branches %}
+        {% if x.status < 20 %}
+
+          <tr>
+          <td>&nbsp;&nbsp;<a class="item" href="{% url 'memberdetail' pk=x.pk %}">{{ x.display_name }}&nbsp;</a></td>
+          {% if activeperson.status >= 40 %}
+              <td>{{ x.authorname }}&nbsp;</td>
+          {% endif %}
+
+          {% if activeperson.status >= 40 %}
+              <td>{{ x.last_login|date:"jS F Y" }}&nbsp;</td>
+          {% endif %}
+
+          {% if activeperson.status >= 60 %}
+             {% if x.status == 10 %}
+              <td><span style='color: #00C000;'>viewtitles</span>&nbsp;</td>
+             {% elif x.status == 15 %}
+              <td><span style='color: #C0C000;'>viewdetails</span>&nbsp;</td>
+             {% elif x.status == 8 %}
+              <td><span style='color: #00C0C0;'>viewnothing</span>&nbsp;</td>
+             {% elif x.status == 18 %}
+              <td><span style='color: #C00000;'>viewmembers</span>&nbsp;</td>
+             {% elif x.status == 5 %}
+              <td><span style='color: #0080C0;'>contact</span>&nbsp;</td>
+            {% endif %}
+          {% endif %}
+
+
+          {% if activeperson.username == x.authorname %}
+             <td><a class="btn btn-default" href="{% url 'memberdelete' pk=x.pk confirmed='no' %}">
+             <span>Remove</span></a></td>
+          {% endif %}
+          </tr>
+
+        {% endif %}
+      {% endfor %}
+  {% endif %}
+
+      </h2>
+      </table>
+{% endblock content %}
+
+

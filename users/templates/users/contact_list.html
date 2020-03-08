@@ -1,0 +1,21 @@
+{% extends "mysite/base.html" %}
+
+{% block content %}
+      <a class="btn btn-default" href="{% url 'contactinsert' %}" >Add a contact</span></a>
+      <a class="btn btn-default" href="{% url 'eventlist' 'current' %}">View Events</a>
+
+      <h2>Contacts</h2>
+
+      <table>
+      {% for x in persons %}
+        <tr>
+        <td>&nbsp;&nbsp;<a class="item" href="{% url 'contactdetail' pk=x.pk %}">{{ x.display_name }}&nbsp;</a></td>
+        <td><a class="btn btn-default" href="{% url 'contactdelete' pk=x.pk confirmed='no' %}">
+        <span>Remove</span></a></td>
+        </tr>
+      </h2>
+      {% endfor %}
+      </table>
+{% endblock content %}
+
+

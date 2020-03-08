@@ -1,0 +1,17 @@
+{% extends "mysite/base.html" %}
+
+{% block content %}
+    <h1>Confirm whether or not you wish to remove this member</h1>
+    {% if error_message %}
+      <h2 class="error">{{error_message}}</h2>
+    {% endif %}
+    <h2></h2>
+    <a class="btn btn-default" href="{% url 'memberdelete' pk=pk confirmed='yes' %}">
+    <span>If you are sure that you want to remove this member, click here</span></a>
+    </h2>
+    <h2></h2>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current' %}">If you wish to retain this member, click here</a>
+    </h2>
+
+{% endblock %}
+

@@ -1,0 +1,14 @@
+{% extends "mysite/base.html" %}
+
+{% block content %}
+    <h1>New or Amended Member</h1>
+    {% if error_message %}
+      <h2 class="error">{{error_message}}</h2>
+    {% endif %}
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_table }}
+        <button type="submit" class="save btn btn-default">Update the website for this member</button>
+    </form>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current'%}">View Events</a>
+{% endblock %}
+

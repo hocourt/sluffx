@@ -1,0 +1,359 @@
+{% extends "mysite/base.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+      {% if not unsubscribed %}
+        <p class="top-menu"><small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+      {% endif %}
+    {% endif %}
+    {% comment %}
+    {% if error_message %}
+      <h2 class="error">{{error_message}}</h2>
+    {% endif %}
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Put this display name on the website</button>
+    </form>
+    {% endcomment %}
+
+
+
+    <h1 class='label'>Change Your Colour Scheme</h1>
+    {% if activeperson.reversevideo == True %}
+    <h2>
+    <span class='label'>Change Date Colour </span>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='white' whence=whence  %}">
+    <span>White</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='pink' whence=whence %}">
+    <span>Pink</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='#FFF3F3' whence=whence %}">
+    <span>Faint Pink</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='lightgreen' whence=whence %}">
+    <span>Light Green</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='#F3FFF3' whence=whence %}">
+    <span>Faint Green</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='aqua' whence=whence %}">
+    <span>Light Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='#F3F3FF' whence=whence %}">
+    <span>Faint Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='#F000F0' whence=whence %}">
+    <span>Purple</span></a>
+    </h2>
+    <h2>
+    <span class='label'>Change Detail Colour</span>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='white' whence=whence %}">
+    <span>White</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='pink' whence=whence %}">
+    <span>Pink</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='#FFF3F3' whence=whence %}">
+    <span>Faint Pink</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='lightgreen' whence=whence %}">
+    <span>Light Green</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='#F3FFF3' whence=whence %}">
+    <span>Faint Green</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='aqua' whence=whence %}">
+    <span>Light Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='#F3F3FF' whence=whence %}">
+    <span>Faint Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='#F000F0' whence=whence %}">
+    <span>Purple</span></a>
+    </h2>
+
+    <h2>
+    <span class='label'>Change Attendees Colour</span>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='white' whence=whence %}">
+    <span>White</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='pink' whence=whence %}">
+    <span>Pink</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='#FFF3F3' whence=whence %}">
+    <span>Faint Pink</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='lightgreen' whence=whence %}">
+    <span>Light Green</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='#F3FFF3' whence=whence %}">
+    <span>Faint Green</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='aqua' whence=whence %}">
+    <span>Light Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='#F3F3FF' whence=whence %}">
+    <span>Faint Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='#F000F0' whence=whence %}">
+    <span>Purple</span></a>
+    </h2>
+
+    <h2>
+    <span class='label'>Change Background Colour</span>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='black' whence=whence %}">
+    <span>Black</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='#B11111' whence=whence %}">
+    <span>Dark Red</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='#005000' whence=whence %}">
+    <span>Dark Green</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='000060' whence=whence %}">
+    <span>Dark Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='#5B1500' whence=whence %}">
+    <span>Brown</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='#600060' whence=whence %}">
+    <span>Dark Purple</span></a>
+    </h2>
+
+      <a class="btn btn-default" href="{% url 'usercolours' whence=whence type='forward' color='#F3F3FF' %}">
+      <span>Change to Normal Video, i.e. dark writing on light background</span></a>
+
+    {# FORWARD VIDEO #}
+    {% else %}
+    <h2>
+    <span class='label'>Change Date Colour</span>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='black' whence=whence %}">
+    <span>Black</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='red' whence=whence %}">
+    <span>Red</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='crimson' whence=whence %}">
+    <span>Crimson</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='green' whence=whence %}">
+    <span>Green</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='blue' whence=whence %}">
+    <span>Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='darkslateblue' whence=whence %}">
+    <span>Dark Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='#5B1500' whence=whence %}">
+    <span>Brown</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='date' color='DarkMagenta' whence=whence %}">
+    <span>Magenta</span></a>
+    </h2>
+    <h2>
+    <span class='label'>Change Detail Colour</span>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='black' whence=whence %}">
+    <span>Black</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='red' whence=whence %}">
+    <span>Red</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='crimson' whence=whence %}">
+    <span>Crimson</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='green' whence=whence %}">
+    <span>Green</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='blue' whence=whence %}">
+    <span>Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='darkslateblue' whence=whence %}">
+    <span>Dark Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='#5B1500' whence=whence %}">
+    <span>Brown</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='detail' color='DarkMagenta' whence=whence %}">
+    <span>Magenta</span></a>
+    </h2>
+    <h2>
+    <span class='label'>Change Attendees Colour</span>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='black' whence=whence %}">
+    <span>Black</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='red' whence=whence %}">
+    <span>Red</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='crimson' whence=whence %}">
+    <span>Crimson</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='green' whence=whence %}">
+    <span>Green</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='blue' whence=whence %}">
+    <span>Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='darkslateblue' whence=whence %}">
+    <span>Dark Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='#5B1500' whence=whence %}">
+    <span>Brown</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='attendees' color='DarkMagenta' whence=whence %}">
+    <span>Magenta</span></a>
+    </h2>
+    <h2>
+    <span class='label'>Change Background Colour</span>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='white' whence=whence %}">
+    <span>White</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='pink' whence=whence %}">
+    <span>Pink</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='#FFF3F3' whence=whence %}">
+    <span>Faint Pink</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='lightgreen' whence=whence %}">
+    <span>Light Green</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='#F3FFF3' whence=whence %}">
+    <span>Faint Green</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='lightblue' whence=whence %}">
+    <span>Light Blue</span></a>
+    <a class="btn btn-default" href="{% url 'usercolours' type='background' color='#F3F3FF' whence=whence %}">
+    <span>Faint Blue</span></a>
+   </h2>
+    <h2>
+      <a class="btn btn-default" href="{% url 'usercolours' whence=whence type='reverse' color='#F3F3FF' %}">
+      <span>Change to Reverse Video, i.e. light writing on dark background</span></a>
+    {% endif %}
+
+   </h2>
+   <br>
+    {% if activeperson.status >= 60 %}
+    <h1 class='label'>Change Colours for unlogged on viewers</h1>
+    {% if activeperson.reversevideo == True %}
+    <h2>
+    <span class='label'>Change Date Colour </span>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='white' whence=whence  %}">
+    <span>White</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='pink' whence=whence %}">
+    <span>Pink</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='#FFF3F3' whence=whence %}">
+    <span>Faint Pink</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='lightgreen' whence=whence %}">
+    <span>Light Green</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='#F3FFF3' whence=whence %}">
+    <span>Faint Green</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='aqua' whence=whence %}">
+    <span>Light Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='#F3F3FF' whence=whence %}">
+    <span>Faint Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='#F000F0' whence=whence %}">
+    <span>Purple</span></a>
+    </h2>
+    <h2>
+    <span class='label'>Change Detail Colour</span>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='white' whence=whence %}">
+    <span>White</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='pink' whence=whence %}">
+    <span>Pink</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='#FFF3F3' whence=whence %}">
+    <span>Faint Pink</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='lightgreen' whence=whence %}">
+    <span>Light Green</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='#F3FFF3' whence=whence %}">
+    <span>Faint Green</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='aqua' whence=whence %}">
+    <span>Light Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='#F3F3FF' whence=whence %}">
+    <span>Faint Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='#F000F0' whence=whence %}">
+    <span>Purple</span></a>
+    </h2>
+
+    <h2>
+    <span class='label'>Change Attendees Colour</span>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='white' whence=whence %}">
+    <span>White</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='pink' whence=whence %}">
+    <span>Pink</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='#FFF3F3' whence=whence %}">
+    <span>Faint Pink</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='lightgreen' whence=whence %}">
+    <span>Light Green</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='#F3FFF3' whence=whence %}">
+    <span>Faint Green</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='aqua' whence=whence %}">
+    <span>Light Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='#F3F3FF' whence=whence %}">
+    <span>Faint Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='#F000F0' whence=whence %}">
+    <span>Purple</span></a>
+    </h2>
+
+    <h2>
+    <span class='label'>Change Background Colour</span>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='black' whence=whence %}">
+    <span>Black</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='#B11111' whence=whence %}">
+    <span>Dark Red</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='#005000' whence=whence %}">
+    <span>Dark Green</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='000060' whence=whence %}">
+    <span>Dark Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='#5B1500' whence=whence %}">
+    <span>Brown</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='#600060' whence=whence %}">
+    <span>Dark Purple</span></a>
+    </h2>
+
+      <a class="btn btn-default" href="{% url 'defaultcolours' whence=whence type='forward' color='#F3F3FF' %}">
+      <span>Change to Normal Video, i.e. dark writing on light background</span></a>
+
+    {# FORWARD VIDEO #}
+    {% else %}
+    <h2>
+    <span class='label'>Change Date Colour</span>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='black' whence=whence %}">
+    <span>Black</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='red' whence=whence %}">
+    <span>Red</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='crimson' whence=whence %}">
+    <span>Crimson</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='green' whence=whence %}">
+    <span>Green</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='blue' whence=whence %}">
+    <span>Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='darkslateblue' whence=whence %}">
+    <span>Dark Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='#5B1500' whence=whence %}">
+    <span>Brown</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='date' color='DarkMagenta' whence=whence %}">
+    <span>Magenta</span></a>
+    </h2>
+    <h2>
+    <span class='label'>Change Detail Colour</span>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='black' whence=whence %}">
+    <span>Black</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='red' whence=whence %}">
+    <span>Red</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='crimson' whence=whence %}">
+    <span>Crimson</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='green' whence=whence %}">
+    <span>Green</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='blue' whence=whence %}">
+    <span>Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='darkslateblue' whence=whence %}">
+    <span>Dark Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='#5B1500' whence=whence %}">
+    <span>Brown</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='detail' color='DarkMagenta' whence=whence %}">
+    <span>Magenta</span></a>
+    </h2>
+    <h2>
+    <span class='label'>Change Attendees Colour</span>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='black' whence=whence %}">
+    <span>Black</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='red' whence=whence %}">
+    <span>Red</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='crimson' whence=whence %}">
+    <span>Crimson</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='green' whence=whence %}">
+    <span>Green</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='blue' whence=whence %}">
+    <span>Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='darkslateblue' whence=whence %}">
+    <span>Dark Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='#5B1500' whence=whence %}">
+    <span>Brown</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='attendees' color='DarkMagenta' whence=whence %}">
+    <span>Magenta</span></a>
+    </h2>
+    <h2>
+    <span class='label'>Change Background Colour</span>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='white' whence=whence %}">
+    <span>White</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='pink' whence=whence %}">
+    <span>Pink</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='#FFF3F3' whence=whence %}">
+    <span>Faint Pink</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='lightgreen' whence=whence %}">
+    <span>Light Green</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='#F3FFF3' whence=whence %}">
+    <span>Faint Green</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='lightblue' whence=whence %}">
+    <span>Light Blue</span></a>
+    <a class="btn btn-default" href="{% url 'defaultcolours' type='background' color='#F3F3FF' whence=whence %}">
+    <span>Faint Blue</span></a>
+   </h2>
+    <h2>
+      <a class="btn btn-default" href="{% url 'defaultcolours' whence=whence type='reverse' color='#F3F3FF' %}">
+      <span>Change to Reverse Video, i.e. light writing on dark background</span></a>
+    {% endif %}
+    {% endif %}
+    <h2>
+    {% if whence == 'events' %}
+    <a class="btn btn-default" href="{% url 'eventlist' 'current' %}">
+    <span>Return to viewing events</span></a>
+    {% elif whence == 'users' %}
+    <a class="btn btn-default" href="{% url 'memberlist' %}">
+    <span>Return to viewing members</span></a>
+    {% else %}
+     {{whence}}
+    {% endif %}
+
+{% endblock %}
+
+

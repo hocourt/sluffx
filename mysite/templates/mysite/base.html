@@ -1,0 +1,89 @@
+<html>
+<head>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+{% comment %}
+{% endcomment %}
+<style>
+
+    h1.label , h1.label :visited { text-align:center; margin-top: 0; padding: 20px 20px 20px 40px;
+      color: {{activeperson.datecolor}}; font-size: xx-large; font-weight:bold; font-family: 'Arial'; text-decoration: none; }
+    h2.attendees , h2.attendees :visited { color: {{activeperson.attendeescolor}}; }
+    h2.date , h2.date :visited { color: {{activeperson.datecolor}}; }
+    h2.label , h2.label :visited { text-align:center; color: {{activeperson.datecolor}}; }
+
+  {% if activeperson.reversevideo == False %}
+    hr { color: 'black'; background-color: 'black'}}; font-weight:bold; }
+    h1,  h1 a, h1:visited, h1 a:visited,  h1 a:active { margin-top: 0; padding: 20px 20px 20px 40px;
+      color: {{activeperson.datecolor}}; background-color:{{activeperson.backgroundcolor}}; font-size: xx-large;
+      font-weight:bold; font-family: 'Arial'; text-align:center; text-decoration: none; }
+    h1.label , h1.label :visited { margin-top: 0; padding: 20px 20px 20px 40px;
+      color: {{activeperson.datecolor}}; font-size: xx-large; font-weight:bold;
+      font-family: 'Arial'; text-align:center; text-decoration: none; }
+    h2.item , h2.item :visited { color: {{activeperson.backgroundcolor}}; }
+    h2 span.label , h2 span.label :visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor}}; }
+    a.label , a .label :visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor}}; }
+    a.label2 , a .label :visited { font-size: x-large; font-weight:bold; color: {{activeperson.attendeescolor}}; }
+    h2 span.date , h2 span.date :visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor}}; }
+    h2 span.detail , h2 span.detail :visited { font-size: x-large; font-weight:bold; color: {{activeperson.detailcolor}}; }
+    h2 span.attendees , h2 span.attendees :visited { font-size: x-large; font-weight:bold; color: {{activeperson.attendeescolor}}; }
+    {# h2 span.background , h2 span.background :visited { font-size: x-large; font-weight:bold; color: {{activeperson.backgroundcolor}}; } #}
+    h2 span.background , h2 span.background :visited { font-size: x-large; font-weight:bold; color: black; }
+   h2 a span.background , h2 a span.background :visited { font-size: x-large; font-weight:bold; color: black; }
+    h2 span.author , h2 span.author :visited { color: #DF9000; font-size: x-large; font-weight:bold; }
+    body { background-color:{{activeperson.backgroundcolor}}; }
+    body { color:{{activeperson.backgroundcolor}}; }
+    td { color: {{activeperson.datecolor}}; padding-left:15px; }
+    td  a.item, td  a.item:visited { color: {{activeperson.attendeescolor}}; padding-left:15px; }
+    .top-menu, .top-menu:hover, .top-menu:visited { color: {{activeperson.datecolor}}; float: right; font-size: 26pt; margin-right: 20px; }
+
+    {% else %}     {% comment i.e. this is reverse video %}{% endcomment %}
+    hr { color: 'white'; background-color: 'white'}}; font-weight:bold; }
+    h1,  h1 a, h1:visited, h1 a:visited,  h1 a:active { margin-top: 0; padding: 20px 20px 20px 40px;
+      color: {{activeperson.datecolor_rev}}; background-color:{{activeperson.backgroundcolor_rev}}; font-size: xx-large;
+      font-weight:bold; font-family: 'Arial'; text-align:center;
+      text-decoration: none; }
+    h1.label , h1.label :visited { text-align:center; margin-top: 0;
+      padding: 20px 20px 20px 40px; color: {{activeperson.datecolor_rev}}; font-size: xx-large;
+      font-weight:bold; font-family: 'Arial'; text-decoration: none; }
+    h2.item , h2.item:visited { color: {{activeperson.backgroundcolor_rev}}; }
+    h2 span.label , h2 span.label:visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor_rev}}; }
+    a.label , a .label :visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor_rev}}; }
+    a.label2 , a .label :visited { font-size: x-large; font-weight:bold; color: {{activeperson.attendeescolor_rev}}; }
+    h2 span.date , h2 span.date:visited { font-size: x-large; font-weight:bold; color: {{activeperson.datecolor_rev}}; }
+    h2 span.detail , h2 span.detail:visited { font-size: x-large; font-weight:bold; color: {{activeperson.detailcolor_rev}}; }
+    h2 span.attendees , h2 span.attendees:visited { font-size: x-large; font-weight:bold; color: {{activeperson.attendeescolor_rev}}; }
+    h2 span.background , h2 span.background:visited { font-size: x-large; font-weight:bold; color: {{activeperson.backgroundcolor_rev}}; }
+    h2 span.author , h2 span.author:visited { color: #DF9000; font-size: x-large; font-weight:bold; }
+    body { background-color:{{activeperson.backgroundcolor_rev}}; } 
+    body { color:{{activeperson.backgroundcolor_rev}}; }
+    td { color: {{activeperson.datecolor_rev}}; padding-left:15px; }
+    td { color: {{activeperson.datecolor_rev}}; padding-left:15px; }
+    td  a.item, td  a.item:visited { color: {{activeperson.attendeescolor_rev}}; padding-left:15px; }
+    .top-menu, .top-menu:hover, .top-menu:visited { color: {{activeperson.datecolor_rev}}; float: right; font-size: 26pt; margin-right: 20px; }
+    {% endif %}
+
+    h2.date a span , h2.date a span :visited { color: black; }
+    h2.error , h2.error :visited { color: #FF0000; }
+    h2 a span { color: 'crimson'; }
+    h2 a span:visited { color: 'black'; }
+</style>
+</head>
+<body>
+
+    {% if logged_in == False %}
+        <p class="top-menu"><small><a href="{% url 'login' %}">Log in</a></small></p>
+    {% endif %}
+      <h1 class='label'>{{TITLE}}</h1>
+      <hr>
+
+      {% block content %}
+      {% endblock %}
+</body>
+</html>
+   
+ {#         <a href="{% url 'django.contrib.auth.views.login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>#}
+      {% comment %}
+        <p class="top-menu"><small><a href="{% url 'django.contrib.auth.views.login' %}">Log in</a></small></p>
+      {% endcomment %}
+

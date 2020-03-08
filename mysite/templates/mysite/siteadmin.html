@@ -1,0 +1,25 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+
+    <h2>
+    {% comment %}
+    <a class="btn btn-default" href="{% url 'advertdisplay' %}" ><span>Club Settings</span></a>
+    {% endcomment %}
+    </h2>
+
+    <h2>
+    Advert {{sitesettings.advert| linebreaks}}
+    </h2>
+    <h2>
+    Contact Info {{sitesettings.contact_info| linebreaks}}
+    </h2>
+
+    {% if error_message %}
+      <h2 class="error">{{error_message}}</h2>
+    {% endif %}
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Update the website for this advert</button>
+    </form>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current' %}">View Events</a>
+{% endblock %}
