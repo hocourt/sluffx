@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models     import User
 from mysite.models                  import Sitesettings
 from .models                        import Person
-from .models                        import Branch
+#from .models                        import Branch
 from .forms                         import UpdateMemberForm, UserOptionsForm, InsertMemberForm, InsertContactForm, PasswordForm, DisplaynameForm
 
     #status == 05      is a contact, not a member, does not have a login and can only be added to an event by a member
@@ -31,7 +31,7 @@ def member_list(request):
   else:
       activeperson                        = sitesettings
       logged_in                           = False
-  persons                                 =  Person.objects.filter(status=20).order_by('display_name')
+  persons                                 =  Person.objects.all().order_by('display_name')
   return render(request, 'users/member_list.html', {'persons': persons, 'activeperson': activeperson, 'logged_in': logged_in })
 
 

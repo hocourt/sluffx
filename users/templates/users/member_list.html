@@ -27,6 +27,8 @@
           {% endif %}
 
 {% comment %}
+{% endcomment %}
+
           {% if activeperson.status >= 60 %}
             {% if x.status == 20 %}
               <td><span style='color: #00C0C0;'>member</span>&nbsp;</td>
@@ -42,7 +44,6 @@
               <td><span style='color: #C00000;'>admin</span>&nbsp;</td>
             {% endif %}
           {% endif %}
-{% endcomment %}
 
           {% if activeperson.status >= 35 %}
               {% if activeperson.username == x.authorname or activeperson.status >= 60 %}
