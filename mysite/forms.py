@@ -11,6 +11,11 @@ class PhotoForm(forms.ModelForm):
         model = Photo
         fields = ('title', 'cover', 'priority')
 
+class PhotoUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Photo
+        fields = ('title', 'priority')
+
 class NoteForm(forms.ModelForm):
     class Meta:
         model = Note

@@ -62,6 +62,10 @@
     <a class="btn btn-default" href="{% url 'photolist' %}"><span>View photos</span></a>
   {% endif %}
 
+  {% if activeperson.status >= 60 %}
+    <a class="btn btn-default" href="{% url 'photolistdeleted' %}"><span>View deleted photos</span></a>
+  {% endif %}
+
   {% if activeperson.status >= 20 %}
     <a class="btn btn-default" href="{% url 'photoinsert' %}"><span>Add photo</span></a>
   {% endif %}

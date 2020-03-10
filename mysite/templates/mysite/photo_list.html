@@ -1,20 +1,20 @@
 {% extends "mysite/base.html" %}
 {% block content %}
 
-<h1>O'Grady Court photos</h1>
+<h1>Coffeepot photos</h1>
     <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >View current events</span></a>
     <a class="btn btn-default" href="{% url 'photoinsert' %}"><span>Add photo</span></a>
 <ul>
-  {% for x in photos %}
-{% comment %}
-      <a class="btn btn-default" href="{% url 'photoupdate' pk=x.photo.pk %}">       <span>Update photo</span></a>
-      <a class="btn btn-default" href="{% url 'photodelete' pk=x.photo.pk %}">       <span>Delete photo</span></a>
-{% endcomment %}
-      <h2>{{ x.title }}</h2>
-          <img src="{{ x.cover.url}}", height="300", width="auto", alt="{{ x.title }}">
+  {% for photo in photos %}
+      <h2>{{ photo.title }}</h2>
+      <a class="btn btn-default" href="{% url 'photoupdate' pk=photo.pk %}"><span>Update photo</span></a>
+      <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
+          <img src="{{ photo.cover.url}}", height="300", width="auto", alt="{{ photo.title }}">
       </h2>
   {% endfor %}
 </ul>
 
 </body>
 {% endblock content %}
+{% comment %}
+{% endcomment %}

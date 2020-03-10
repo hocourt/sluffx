@@ -1,0 +1,20 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+
+<h1>Coffeepot deleted photos</h1>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >View current events</span></a>
+    <a class="btn btn-default" href="{% url 'photoinsert' %}"><span>Add photo</span></a>
+<ul>
+  {% for x in photos %}
+      <a class="btn btn-default" href="{% url 'photorestore' pk=x.photo.pk %}"><span>Restore photo</span></a>
+      <a class="btn btn-default" href="{% url 'photodeleteperm' pk=x.photo.pk %}"><span>Delete photo permanantly</span></a>
+      <h2>{{ x.title }}</h2>
+          <img src="{{ x.cover.url}}", height="300", width="auto", alt="{{ x.title }}">
+      </h2>
+  {% endfor %}
+</ul>
+
+</body>
+{% endblock content %}
+{% comment %}
+{% endcomment %}

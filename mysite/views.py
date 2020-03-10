@@ -9,11 +9,12 @@ from .models                        import Note
 from users.models                   import Person
 from .forms                         import SiteadminForm
 from .forms                         import PhotoForm
+from .forms                         import PhotoUpdateForm
 from .forms                         import NoteForm
 #from django.views.generic           import ListView
 from django.views.generic           import CreateView
 from django.views.generic           import UpdateView
-from django.views.generic           import DeleteView
+#from django.views.generic           import DeleteView
 
 @login_required
 def siteadmin_detail(request):
@@ -45,6 +46,11 @@ def photo_list(request):
   photos                                     = Photo.objects.filter(is_live=True)
   return render(request, 'mysite/photo_list.html', {'photos': photos})
 
+@login_required
+def photo_list_deleted(request):
+  photos                                     = Photo.objects.filter(is_live=False)
+  return render(request, 'mysite/photo_list_deleted.html', {'photos': photos})
+
 """
 class PhotoList(ListView):
     model = Photo
@@ -57,6 +63,7 @@ class PhotoInsert(CreateView):
     template_name = 'mysite/photo_insert_update.html'
     success_url = reverse_lazy('photolist')
 
+"""
 class PhotoUpdate(UpdateView):
     model = Photo
     form_class = PhotoForm
@@ -66,23 +73,61 @@ class PhotoUpdate(UpdateView):
 class PhotoDelete(DeleteView):
     model = Photo
     success_url = reverse_lazy('photolist')
-
-
-
 """
+
+
+@login_required
+def photo_update(request, pk):
+    activeuser                                                                      =  User.objects.get(id=request.user.id)
+    activeperson                                                                    =  Person.objects.get(username=activeuser.username)
+    photo                                                                           = get_object_or_404(Photo, pk=pk)
+    if request.method                                                               != 'POST':
+        form                                                                        = PhotoUpdateForm(instance=photo)
+        context                                                                     =   {'form': form}
+        return render                                                               (request,'mysite/photo_insert_update.html' , context)
+    else:
+        form                                                                        = PhotoUpdateForm(request.POST, instance=photo)
+        if form.is_valid():
+            note                                                                    = form.save(commit=False)
+            if request.user.is_authenticated and activeperson.status >=  60:
+                note.save()
+                form.save_m2m()
+                return redirect('photolist')
+            else:
+                context                                                              =      {'form': form}
+                return render                                                               (request, 'mysite/photo_insert_update.html', context)
+        else:
+            context                                                                 =   {'form': form}
+            return render                                                               (request,'mysite/photo_insert_update.html' , context)
+
 @login_required
 def photo_delete(request, pk):
-  photo                                     = get_object_or_404(Photo, pk=pk)
-  photo.is_live                             = False
-  photo.save()
-  return redirect('photolist')
+    activeuser                                                                      =  User.objects.get(id=request.user.id)
+    activeperson                                                                    =  Person.objects.get(username=activeuser.username)
+    photo                                                                           = get_object_or_404(Photo, pk=pk)
+    if request.user.is_authenticated and activeperson.status >=  60:
+        photo.is_live                                                               = False
+        photo.save()
+    return redirect('photolist')
+
+@login_required
+def photo_restore(request, pk):
+    activeuser                                                                      =  User.objects.get(id=request.user.id)
+    activeperson                                                                    =  Person.objects.get(username=activeuser.username)
+    photo                                                                           = get_object_or_404(Photo, pk=pk)
+    if request.user.is_authenticated and activeperson.status >=  60:
+        photo.is_live                                                               = True
+        photo.save()
+    return redirect('photolist')
 
 @login_required
 def photo_delete_perm(request, pk):
-  photo                                     = get_object_or_404(Photo, pk=pk)
-  photo.delete()
-  return redirect('photolist')
-"""
+    activeuser                                                                      =  User.objects.get(id=request.user.id)
+    activeperson                                                                    =  Person.objects.get(username=activeuser.username)
+    photo                                                                           = get_object_or_404(Photo, pk=pk)
+    if request.user.is_authenticated and activeperson.status >=  60:
+        photo.delete()
+    return redirect('photolist')
 
 @login_required
 def note_update(request):
@@ -111,11 +156,13 @@ def note_update(request):
 
 @login_required
 def note_delete(request):
-  note                                          = Note.objects.get()
-  note.note_content                             = ""
-  note.save()
-  return redirect('eventlist', 'current')
-
+    activeuser                                                                      =  User.objects.get(id=request.user.id)
+    activeperson                                                                    =  Person.objects.get(username=activeuser.username)
+    note                                                                            = Note.objects.get()
+    if request.user.is_authenticated and activeperson.status >=  60:
+        note.note_content                                                           = ""
+        note.save()
+    return redirect('eventlist', 'current')
 
 
 """
