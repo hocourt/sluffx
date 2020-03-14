@@ -1,12 +1,17 @@
 from django                                 import forms
-from .models                                import Sitesettings, Photo, Note
+from .models                                import Site, Photo,  Enquiry
 
-class SiteadminForm(forms.ModelForm):
+class advertUpdateForm(forms.ModelForm):
     class Meta:
-        model = Sitesettings
-        fields = ( 'private_site', 'advert' ,'contact_info' ,'status' , 'reversevideo' , 'datecolor' , 'detailcolor' , 'attendeescolor' , 'backgroundcolor' , 'datecolor_rev' , 'detailcolor_rev' , 'attendeescolor_rev' , 'backgroundcolor_rev' ,     'notes' )
+        model = Site
+        fields = ( 'advert' ,'contact_info' )
 
-class PhotoForm(forms.ModelForm):
+class noteUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Site
+        fields = ('note',)
+
+class PhotoInsertForm(forms.ModelForm):
     class Meta:
         model = Photo
         fields = ('title', 'cover', 'priority')
@@ -16,7 +21,7 @@ class PhotoUpdateForm(forms.ModelForm):
         model = Photo
         fields = ('title', 'priority')
 
-class NoteForm(forms.ModelForm):
+class EnquiryInsertForm(forms.ModelForm):
     class Meta:
-        model = Note
-        fields = ('note_content',)
+        model = Enquiry
+        fields = ('content',)

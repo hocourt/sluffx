@@ -3,7 +3,7 @@ from django.utils                   import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models     import User
 from users.models                   import Person
-from mysite.models                  import Sitesettings
+from mysite.models                  import Site, Photo
 from .models                        import Event,Notice,Amendment
 from .forms                         import EventForm, HostForm, AttendeeForm, NoticeForm
 from mysite.settings                import TITLE
@@ -53,7 +53,7 @@ def event_list(request, periodsought='current'):
     else:
         events = Event.objects.exclude(is_live=True, e_date__gte=timezone.now()).order_by('-e_date')
 
-    sitesettings                                    =  get_object_or_404(Sitesettings)
+    site                                            =  get_object_or_404(Site)
     notice                                    =  get_object_or_404(Notice).notice
     #if request.user.is_authenticated():
     if request.user.is_authenticated == True:
@@ -61,10 +61,8 @@ def event_list(request, periodsought='current'):
         activeperson                        = Person.objects.get(username=activeuser.username)
         activeperson.last_login             = timezone.now()
         activeperson.save()
-        logged_in                           = True
     else:
-        activeperson                        = sitesettings
-        logged_in                           = False
+        activeperson                        = Person.objects.get(username='notloggedin')
 
     events_augmented = []
     #stored_event_date = '2000-01-01'
@@ -80,15 +78,12 @@ def event_list(request, periodsought='current'):
             attendees_list.append(attendee.display_name)
         attendees_string   = ', '.join(attendees_list)
 
-        if logged_in == True:
-            if activeperson.status                   >=  40                         \
-            or event.author                          ==  activeuser                 \
-            or activeperson in event.hosts.all():
-                user_can_edit_this_event             =   True
-            else:
-                user_can_edit_this_event             =   False
+        if activeperson.status                   >=  40                         \
+        or event.author                          ==  activeuser                 \
+        or activeperson in event.hosts.all():
+            event.editable                       =   True
         else:
-            user_can_edit_this_event             =   False
+            event.editable                       =   False
 
         if event.e_date                          <  timezone.localtime(timezone.now()).date():
           event_status_now                       =  'past'
@@ -107,14 +102,13 @@ def event_list(request, periodsought='current'):
         #amendments_string                        = ', '.join(amendments_list)
 
         event_augmented = \
-        {"event":event, "attendees":attendees_string, "hosts":hosts_string, 'user_can_edit_this_event':user_can_edit_this_event, \
+        {"event":event, "attendees":attendees_string, "hosts":hosts_string, \
         'event_status_now': event_status_now, 'first_insert': amendments_list[0:1], 'amendments': amendments_list[1:]}
         events_augmented.append(event_augmented)
-        #{"event":event, "attendees":attendees_string, "hosts":hosts_string, 'user_can_edit_this_event':user_can_edit_this_event, 'event_status_now': event_status_now, 'amendments': amendments_string}
-
-    return render(request, 'events/event_list.html', \
-    {'events': events_augmented, 'periodsought':periodsought, 'activeperson': activeperson, 'TITLE': TITLE, \
-    'sitesettings': sitesettings, 'logged_in': logged_in, 'notice': notice, 'events_raw' : events})
+    photos 									= Photo.objects.filter(is_live=True).order_by('-priority')
+    context = {'events': events_augmented, 'periodsought':periodsought, 'activeperson': activeperson, 'TITLE': TITLE, \
+	    'site': site, 'notice': notice, 'photos' : photos}
+    return render(request, 'events/event_list.html', context)
 
 
 # functions which do not update the database

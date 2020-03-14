@@ -8,7 +8,7 @@ from .models                                import Person
 class InsertMemberForm(forms.ModelForm):
     class Meta:
         model = Person
-        fields = ('username', 'display_name','password', 'photo_cover')
+        fields = ('username', 'display_name','password', 'cover')
 
 class InsertContactForm(forms.ModelForm):
     class Meta:
@@ -18,7 +18,7 @@ class InsertContactForm(forms.ModelForm):
 class UpdateMemberForm(forms.ModelForm):
     class Meta:
         model = Person
-        fields = ( 'display_name', 'status', 'authorname', 'photo_cover')
+        fields = ( 'display_name', 'status', 'authorname', 'cover')
 
 class PasswordForm(forms.Form):
     password = forms.CharField(label='New password', max_length=20)

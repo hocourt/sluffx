@@ -16,25 +16,33 @@
     &nbsp;&nbsp;<span class="attendees">Username:&nbsp;&nbsp;</span>
     <span class="detail">{{ person.username  }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
     {% if person.status == 5 %}
-      <span class="detail">Contact</span>
+        <span class="detail">Contact</span>
     {% else %}
-      {% if person.fullmember %}
-        <span class="detail">Full Member</span>
-      {% else %}
-        <span class="detail">Prospective Member</span>
-      {% endif %}
-
+        {% if person.status == 20 %}
+            <span class="detail">Member</span>
+        {% elif person.status == 15 %}
+            <span class="detail">Prospective </span>
+        {% elif person.status == 5 %}
+            <span class="detail">Contact </span>
+        {% endif %}
     {% endif %}
 
     {% if person.authorname %}
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="attendees">Added by:&nbsp;&nbsp;</span><span class="detail">{{ person.authorname  }}</span>
     {% endif %}
     </h2>
+
     <br><br>
 
     <h2><span class="attendees">Authorisations</span></h2>
 
-    {% if person.status == 20 %}
+    {% if person.status == 5 %}
+      <h2> <span class='detail' > Cannot even see event titles</span></h2>
+    {% elif person.status == 10 %}
+      <h2> <span class='detail' > Can see event title, but not book in</span></h2>
+    {% elif person.status == 15 %}
+      <h2> <span class='detail' > Can see event details and book into events</span></h2>
+    {% elif person.status == 20 %}
       <h2> <span class='detail' > Can see event details and book into events</span></h2>
     {% elif person.status == 30 %}
       <h2> <span class='detail' > Can see event details and book into events</span></h2>
@@ -53,7 +61,14 @@
       <h2> <span class='detail' > Can post events and update/delete any event, not only their own</span></h2>
       <h2> <span class='detail' > Can add a prospective member and remove them</span></h2>
       <h2> <span class='detail' > Can view member details</span></h2>
-      <h2> <span class='detail' > Can change a member from Prospective to Full and vice versa</span></h2>
+      <h2> <span class='detail' > Can change a person from Prospective to Member and vice versa</span></h2>
+    {% elif person.status == 55 %}
+      <h2> <span class='detail' > Can see event details and book into events</span></h2>
+      <h2> <span class='detail' > Can post events and update/delete any event, not only their own</span></h2>
+      <h2> <span class='detail' > Can add a prospective member and remove them</span></h2>
+      <h2> <span class='detail' > Can view member details</span></h2>
+      <h2> <span class='detail' > Can change a member's authorisations</span></h2>
+      <h2> <span class='detail' > Can remove a member, following a committee decision</span></h2>
     {% elif person.status == 60 %}
       <h2> <span class='detail' > Can see event details and book into events</span></h2>
       <h2> <span class='detail' > Can post events and update/delete any event, not only their own</span></h2>
@@ -61,36 +76,24 @@
       <h2> <span class='detail' > Can view member details</span></h2>
       <h2> <span class='detail' > Can change a member's authorisations</span></h2>
       <h2> <span class='detail' > Can remove a member, following a committee decision</span></h2>
-    {% elif person.status == 10 %}
-      <h2> <span class='detail' > Can see event title, but not book ins</span></h2>
-    {% elif person.status == 18 %}
-      <h2> <span class='detail' > Can see members, but not book in</span></h2>
-    {% elif person.status == 8 %}
-      <h2> <span class='detail' > Cannot even see event titles</span></h2>
-    {% elif person.status == 15 %}
-      <h2> <span class='detail' > Can see event details, but not book in</span></h2>
-    {% elif person.status == 5 %}
-      <h2> <span class='detail' > None</span></h2>
     {% endif %}
 
     <br><br>
 
-    {% if activeperson.status >= 60  %}
+    {% if activeperson.status >= 55  %}
       <a class="btn btn-default" href="{% url 'memberupdate' pk=person.pk %}">
       <span>Update this member</span></a>
     {% endif %}
 
-    {% if activeperson.status >= 50 and person.status >= 20  %}
-        {% if person.fullmember %}
-          <td><a class="btn btn-default" href="{% url 'demote' pk=person.pk %}">
-          <span>Change to Prospective Member</span></a></td>
+    {% if activeperson.status == 50 %}
+        {% if person.status >= 20 %}
+          <td><a class="btn btn-default" href="{% url 'demote' pk=person.pk %}">  <span>Change to Prospective Member</span></a></td>
         {% else %}
-          <td><a class="btn btn-default" href="{% url 'promote' pk=person.pk %}">
-          <span>Change to Full Member</span></a></td>
+          <td><a class="btn btn-default" href="{% url 'promote' pk=person.pk %}"> <span>Change to Full Member</span></a></td>
         {% endif %}
     {% endif %}
 
-    {% if activeperson.status >= 60  or person.authorname == activeperson.username %}
+    {% if activeperson.status >= 55  or person.authorname == activeperson.username %}
       <a class="btn btn-default" href="{% url 'memberdelete' pk=person.pk confirmed='no' %}">
       <span>Remove this member/contact</span></a>
     {% endif %}

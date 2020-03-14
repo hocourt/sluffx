@@ -6,11 +6,13 @@
     <a class="btn btn-default" href="{% url 'photoinsert' %}"><span>Add photo</span></a>
 <ul>
   {% for photo in photos %}
+	<hr>
       <h2>{{ photo.title }}</h2>
       <a class="btn btn-default" href="{% url 'photoupdate' pk=photo.pk %}"><span>Update photo</span></a>
       <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
-          <img src="{{ photo.cover.url}}", height="300", width="auto", alt="{{ photo.title }}">
-      </h2>
+	<h2>
+          <img src="{{ photo.cover.url}}", height="auto", width="1100", alt="{{ photo.title }}">
+      	</h2>
   {% endfor %}
 </ul>
 

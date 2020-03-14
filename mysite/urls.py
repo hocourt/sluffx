@@ -14,7 +14,10 @@ urlpatterns = [
     path('accounts/profile/' ,          views.fromlogin ),
     path('admin/',                      admin.site.urls),
 #
-    path('siteadmindetail',             views.siteadmin_detail,                                                            name='siteadmindetail'),
+    path('advertupdate',             	views.advert_update,                                                                name='advertupdate'),
+    path('noteupdate',                  views.note_update,                                                                 name='noteupdate'),
+    #path('notedelete',                  views.note_delete,                                                                 name='notedelete'),
+    #path('contactus',             	views.contactus,                                                            name='contactus'),
 #
     path('photolist',                   views.photo_list,                                                                  name='photolist'),
     path('photolistdeleted',            views.photo_list_deleted,                                                          name='photolistdeleted'),
@@ -22,12 +25,12 @@ urlpatterns = [
     #path('photoupdate/<int:pk>/',       PhotoUpdate.as_view(),                                                             name='photoupdate'),
     path('photoupdate/<int:pk>/',       views.photo_update,                                                              name='photoupdate'),
     path('photorestore/<int:pk>/',      views.photo_restore,                                                             name='photorestore'),
-    path('photorestore/<int:pk>/',      views.photo_restore,                                                             name='photorestore'),
     path('photodelete/<int:pk>/',       views.photo_delete,                                                              name='photodelete'),
     path('photodeleteperm/<int:pk>/',   views.photo_delete_perm,                                                         name='photodeleteperm'),
 #
-    path('noteupdate',                  views.note_update,                                                                 name='noteupdate'),
-    path('notedelete',                  views.note_delete,                                                                 name='notedelete'),
+#
+    path('enquirylist',                  views.enquiry_list,                                                                 name='enquirylist'),
+    path('enquiryinsert',                  views.enquiry_insert,                                                                 name='enquiryinsert'),
 #
     path('',                            include('events.urls')),
     path('',                            include('users.urls')),

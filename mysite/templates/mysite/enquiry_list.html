@@ -1,0 +1,17 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+<h1>Active enquiries </h1>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >View current events</span></a>
+<ul>
+  {% for enquiry in enquirys %}
+      <h2>{{ enquiry.title }}</h2>
+      <a class="btn btn-default" href="{% url 'enquirydelete' pk=enquiry.pk %}"><span>Delete enquiry</span></a>
+      <h2 class="item"><span class="detail">{{enquiry.content}}</span></h2>
+      </h2>
+  {% endfor %}
+</ul>
+
+</body>
+{% endblock content %}
+{% comment %}
+{% endcomment %}

@@ -22,6 +22,7 @@ class Event(models.Model):
   created_date            = models.DateTimeField                          (default=timezone.now)
   last_modified           = models.DateTimeField                          (default=timezone.now)
   is_live                 = models.BooleanField                           (default=True)
+  editable                = models.BooleanField                           (blank=True,null=True)
   def __str__(self):
     return self.detail_public
 

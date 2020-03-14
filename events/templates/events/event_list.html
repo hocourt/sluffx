@@ -1,92 +1,110 @@
 {% extends "mysite/base.html" %}
 {% block content %}
 
-  {% if logged_in == False %}
+  {% if activeperson.status == 10 %}
+    <a class="btn btn-default" href="{% url 'contactus' %}" >Contact us</span></a>
     <h2 class='item'><span class='detail'>{{sitesettings.advert}}</span></h2>
     <h2 class='item'><span class='detail'>{{sitesettings.contact_info}}</span></h2>
   {% endif %}
 
-    {% if activeperson.status >= 60 %}
+{% comment %}
+    {% if activeperson.status >= 55 %}
         {% if periodsought == 'current' %}
             <a class="btn btn-default" href="{% url 'noticedelete' %}" >Delete notice</span></a>
             <a class="btn btn-default" href="{% url 'noticeupdate' %}" >Insert/Change notice</span></a>
         {% endif %}
     {% endif %}
+{% endcomment %}
 
   {% if activeperson.status >= 30 %}
     {% if periodsought == 'current' %}
       <a class="btn btn-default" href="{% url 'eventinsert' %}" >
       <span>Add an event</span></a>
+{% comment %}
       <a class="btn btn-default" href="{% url 'eventlist' 'notcurrent' %}" >
       <span>View archived events</span></a>
     {% else %}
       <h1> Events that have either been deleted or have become outdated</h1>
       <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >View current events</span></a>
+{% endcomment %}
     {% endif %}
   {% endif %}
 
-  {% if activeperson.status >= 20 %}
-    <a class="btn btn-default" href="{% url 'memberlist' %}"><span>View members</span></a>
+  {% if activeperson.status >= 15 %}
+    <a class="btn btn-default" href="{% url 'memberlist' %}"><span>View members/prospectives</span></a>
   {% endif %}
 
-  {% if activeperson.status >= 38 %}
-    <a class="btn btn-default" href="{% url 'branchlist' %}"><span>View branches</span></a>
-  {% endif %}
-
-
-
-  {% if logged_in == True %}
+  {% if activeperson.status > 10 %}
     <p class="top-menu"><small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
   {% endif %}
 
-  {% if activeperson.status >= 35 %}
-    <a class="btn btn-default" href="{% url 'memberinsert' %}" > <span>Add a member</span></a>
+  {% if activeperson.status >= 40 %}
+    <a class="btn btn-default" href="{% url 'memberinsert' %}" > <span>Add a prospective</span></a>
   {% endif %}
 
   {% if activeperson.status >= 30 %}
     <a class="btn btn-default" href="{% url 'contactinsert' %}" ><span>Add a contact</span></a>
   {% endif %}
 
-  {% if activeperson.status >= 20 %}
+  {% if activeperson.status >= 15 %}
     <a class="btn btn-default" href="{% url 'password' %}"> <span>Change Your Password</span></a>
     <a class="btn btn-default" href="{% url 'displayname' %}"> <span>Change Your Displayed Name</span></a>
     <a class="btn btn-default" href="{% url 'usercolours' type='get' color='get' whence='events' %}"> <span>Colours</span></a>
   {% endif %}
 
-  {% if activeperson.status >= 60 %}
-    <a class="btn btn-default" href="{% url 'siteadmindetail' %}">
-    <span>Admin</span></a>
+  {% if activeperson.status >= 55 %}
+    <a class="btn btn-default" href="{% url 'advertupdate' %}">
+    <span>Advert</span></a>
   {% endif %}
 
+{% comment %}
   {% if activeperson.status >= 20 %}
+{% endcomment %}
     <a class="btn btn-default" href="{% url 'photolist' %}"><span>View photos</span></a>
+{% comment %}
   {% endif %}
+{% endcomment %}
 
-  {% if activeperson.status >= 60 %}
+  {% if activeperson.status >= 55 %}
     <a class="btn btn-default" href="{% url 'photolistdeleted' %}"><span>View deleted photos</span></a>
   {% endif %}
 
-  {% if activeperson.status >= 20 %}
+  {% if activeperson.status >= 40 %}
     <a class="btn btn-default" href="{% url 'photoinsert' %}"><span>Add photo</span></a>
   {% endif %}
 
-  {% if activeperson.status >= 60 %}
+{% comment %}
+  {% if activeperson.status >= 40 %}
+    <a class="btn btn-default" href="{% url 'enquirylist' %}"><span>View enquiries</span></a>
+  {% endif %}
+
+  {% if activeperson.status == 10 %}
+    <a class="btn btn-default" href="{% url 'contactus' %}"><span>Contact us</span></a>
+  {% endif %}
+
+  {% if activeperson.status >= 20 %}
+    <a class="btn btn-default" href="{% url 'contactus' %}"><span>Send a message to the committee</span></a>
+  {% endif %}
+{% endcomment %}
+
+
+  {% if activeperson.status >= 55 %}
     <a class="btn btn-default" href="{% url 'noteupdate' %}"><span>Update note</span></a>
   {% endif %}
 
-  {% if activeperson.status >= 60 %}
+{% comment %}
+  {% if activeperson.status >= 55 %}
     <a class="btn btn-default" href="{% url 'notedelete' %}"><span>Delete note</span></a>
   {% endif %}
-
-
-   <hr>
+{% endcomment %}
 
   {% for x in events %}
+<hr>
     <h2>
     {% if activeperson.status >= 10 %}
         <span class='date'> {{ x.event.e_date|date:"l" }} {{ x.event.e_date|date:"jS F Y" }} </span>
     {% endif %}
-    {% if x.user_can_edit_this_event == True %}
+    {% if x.event.editable == True %}
         {% if periodsought == 'current' %}
             <a class="btn btn-default" href="{% url 'bookinto' pk=x.event.pk %}">
             <span>Book in</span></a>
@@ -94,8 +112,10 @@
             <span>Leave event</span></a>
             <a class="btn btn-default" href="{% url 'eventupdate' pk=x.event.pk %} ">
             <span>Change event</span></a>
+{% comment %}
             <a class="btn btn-default" href="{% url 'eventrepeat' pk=x.event.pk %} ">
             <span>Repeat event</span></a>
+{% endcomment %}
             <a class="btn btn-default" href="{% url 'hostsupdate' pk=x.event.pk %} ">
             <span>Update hosts</span></a>
             <a class="btn btn-default" href="{% url 'attendeesupdate' pk=x.event.pk %} ">
@@ -116,7 +136,7 @@
               {% if activeperson.status >= 30 %}
                   <a class="btn btn-default" href="{% url 'bookinto' pk=x.event.pk %}"> <span>Book in</span></a>
                   <a class="btn btn-default" href="{% url 'leave' pk=x.event.pk %}"> <span>Leave event</span></a>
-              {% elif activeperson.status >= 20 %}
+              {% elif activeperson.status >= 15 %}
                   <a class="btn btn-default" href="{% url 'bookinto' pk=x.event.pk %}"><span>Click here to book into this event</span></a>
                   <a class="btn btn-default" href="{% url 'leave' pk=x.event.pk %}"> <span>Click here to leave this event</span></a>
               {% endif %}
@@ -125,7 +145,7 @@
 
       <h2 class="item"><span class='detail'>{{ x.event.detail_public|linebreaks }}</span></h2>
 
-      {% if activeperson.status >= 20 or sitesettings.private_site == False %}
+      {% if activeperson.status >= 15 or sitesettings.private_site == False %}
           <h2 class="item"><span class='detail'>{{ x.event.detail_private|linebreaks }}</span></h2>
           <h2><span class='label'>Host(s):  </span>&nbsp;&nbsp;<span class='attendees'>{{ x.hosts }}    </span></a></h2>
           <h2><span class='label'>Attendees:</span>&nbsp;&nbsp;<span class='attendees'>{{ x.attendees }}</span></a></h2>
@@ -134,7 +154,7 @@
           {% endif %}
       {% endif %}
 
-      {% if activeperson.status >= 60 %}
+      {% if activeperson.status >= 55 %}
           <h2><span class='label'>Author:</h2>
           {% for y in x.first_insert %}
               <h2><span class='label'> </span>
@@ -147,20 +167,38 @@
           {% endfor %}
       {% endif %}
 
-<hr>
 
       {% endfor %}
 
+
+  </h2>
+
+{% comment %}
+<h1>Coffeepot photos</h1>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >View current events</span></a>
+    <a class="btn btn-default" href="{% url 'photoinsert' %}"><span>Add photo</span></a>
+{% endcomment %}
+<ul>
+  {% for photo in photos %}
+	<hr>
+      <h2>{{ photo.title }}</h2>
+      <a class="btn btn-default" href="{% url 'photoupdate' pk=photo.pk %}"><span>Update photo</span></a>
+      <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
+	<h2>
+          <img src="{{ photo.cover.url}}", height="auto", width="1170", alt="{{ photo.title }}">
+      	</h2>
+  {% endfor %}
+</ul>
+
   <br><br><br>
+<hr>
   <h2>
-  {% if logged_in == True %}
+  {% if activeperson.status > 10 %}
       <a class="btn btn-default" href="{% url 'unsubscribe' confirmed='no' %}"><span class='background' style="color:black" >Unsubscribe</span></a>
   {% endif %}
   </h2>
 
   <h2>
-
-  </h2>
 </body>
 
 {% endblock content %}
