@@ -122,9 +122,7 @@
   {% for x in events %}
 <hr>
     <h2>
-    {% if logged_in == False %}
-        <span class='date'> {{ x.event.e_date|date:"l" }} {{ x.event.e_date|date:"jS F Y" }} </span>
-    {% endif %}
+      <span class='date'> {{ x.event.e_date|date:"l" }} {{ x.event.e_date|date:"jS F Y" }} </span>
     {% if x.event.editable == True %}
         {% if periodsought == 'current' %}
             <a class="btn btn-default" href="{% url 'bookinto' pk=x.event.pk %}">
