@@ -6,6 +6,7 @@ from mysite.models                  import Site
 from .models                        import Person
 from .forms                         import UpdateMemberForm, UserOptionsForm, InsertMemberForm, InsertContactForm, PasswordForm, DisplaynameForm
 
+# 2003221729
     #status == 05      has no authorisations.Can only be added to an event by a member
     #status == 10      can view event dates and titles.
     #status == 15      also can book into and out of events. For prospectives
