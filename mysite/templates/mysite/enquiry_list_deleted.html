@@ -1,0 +1,18 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+<h1 class="label">Deleted Enquiries</h1>
+<br><br>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >Return to Main Page</span></a>
+<ul>
+  {% for enquiry in enquirys %}
+        <hr>
+     {% if activeperson.status == 55 %}
+        <h1 class="label">each deleted enquiry</h1>
+    {% endif %}
+  {% endfor %}
+</ul>
+</body>
+{% endblock content %}
+{% comment %}
+      <a class="btn btn-default" href="{% url 'enquirydeleteperm'     pk=enquiry.pk %}"><span>Delete enquiry permanantly</span></a>
+{% endcomment %}

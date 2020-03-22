@@ -1,15 +1,26 @@
 {% extends "mysite/base.html" %}
 {% block content %}
 
-<h1>Coffeepot photos</h1>
-    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >View current events</span></a>
+<h1 class = "label">Coffeepot photos</h1>
+<br><br>
+    <p>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >Return to Main Page</span></a>
     <a class="btn btn-default" href="{% url 'photoinsert' %}"><span>Add photo</span></a>
+    </p>
+<br>
 <ul>
   {% for photo in photos %}
 	<hr>
-      <h2>{{ photo.title }}</h2>
-      <a class="btn btn-default" href="{% url 'photoupdate' pk=photo.pk %}"><span>Update photo</span></a>
+      <h2 class="item"><span class='detail'>{{ photo.title }} </span></h2>
+     {% if activeperson.status >= 55 %}
+      <a class="btn btn-default" href="{% url 'photoauthorupdate' pk=photo.pk %}"><span>Update author</span></a>
+      <a class="btn btn-default" href="{% url 'photopriorityupdate' pk=photo.pk %}"><span>Update priority</span></a>
+      <a class="btn btn-default" href="{% url 'phototitleupdate' pk=photo.pk %}"><span>Update title</span></a>
       <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
+    {% elif activeperson.username == photo.authorname %}
+      <a class="btn btn-default" href="{% url 'phototitleupdate' pk=photo.pk %}"><span>Update title</span></a>
+      <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
+    {% endif %}
 	<h2>
           <img src="{{ photo.cover.url}}", height="auto", width="1100", alt="{{ photo.title }}">
       	</h2>

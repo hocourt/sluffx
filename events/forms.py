@@ -11,7 +11,7 @@ class AttendeeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(AttendeeForm, self).__init__(*args, **kwargs)
         self.fields["attendees"].widget = CheckboxSelectMultiple()
-        self.fields["attendees"].queryset = Person.objects.order_by('display_name')
+        self.fields["attendees"].queryset = Person.objects.filter(status__lte=60).exclude(status=10).order_by('display_name')
 
 class HostForm(forms.ModelForm):
     class Meta:
@@ -20,7 +20,7 @@ class HostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(HostForm, self).__init__(*args, **kwargs)
         self.fields["hosts"].widget = CheckboxSelectMultiple()
-        self.fields["hosts"].queryset = Person.objects.order_by('display_name')
+        self.fields["hosts"].queryset = Person.objects.filter(status__lte=60).exclude(status=10).order_by('display_name')
 
 class EventForm(forms.ModelForm):
     class Meta:

@@ -1,17 +1,25 @@
 {% extends "mysite/base.html" %}
 {% block content %}
-<h1>Active enquiries </h1>
-    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >View current events</span></a>
+
+<h1 class="label">Enquiries</h1>
+<br><br>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >Return to Main Page</span></a>
 <ul>
   {% for enquiry in enquirys %}
-      <h2>{{ enquiry.title }}</h2>
-      <a class="btn btn-default" href="{% url 'enquirydelete' pk=enquiry.pk %}"><span>Delete enquiry</span></a>
-      <h2 class="item"><span class="detail">{{enquiry.content}}</span></h2>
-      </h2>
+     {% if activeperson.status >= 40 %}
+        <hr>
+        <h2><span class="attendees">{{ enquiry.content }}</span></h2>
+        <h2><span class='date'> {{ enquiry.created_date|date:"l" }} {{ enquiry.created_date|date:"jS F Y" }} </span></h2>
+         <h2><a>&nbsp;&nbsp;<span class='attendees'> {{enquiry.title}}&nbsp;{{enquiry.created_date}}</span></a></h2>
+        <h2><span class="attendees">{{ enquiry.priority }}</span></h2>
+     {% endif %}
   {% endfor %}
 </ul>
 
 </body>
 {% endblock content %}
 {% comment %}
+        <span class='date'> {{ enquiry.created_date} </span>
+         <a class="btn btn-default" href="{% url 'enquirydelete' pk=enquiry.pk %}"><span>Delete enquiry</span></a>
+        <span class='date'> {{ x.event.e_date|date:"l" }} {{ x.event.e_date|date:"jS F Y" }} </span>
 {% endcomment %}

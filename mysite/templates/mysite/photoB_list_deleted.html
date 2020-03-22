@@ -1,0 +1,33 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+
+<h1 class="label">Coffeepot deleted photoBs</h1>
+<br><br>
+<p>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >Return to Main Page</span></a>
+    <a class="btn btn-default" href="{% url 'photoBinsert' %}"><span>Add photoB</span></a>
+</p>
+<br>
+<ul>
+  {% for photoB in photoBs %}
+     <hr>
+     {% if activeperson.status >= 55 %}
+      <a class="btn btn-default" href="{% url 'photoBauthorupdate'   pk=photoB.pk %}"><span>Update author</span></a>
+      <a class="btn btn-default" href="{% url 'photoBpriorityupdate' pk=photoB.pk %}"><span>Update priority</span></a>
+      <a class="btn btn-default" href="{% url 'photoBtitleupdate'    pk=photoB.pk %}"><span>Update title</span></a>
+      <a class="btn btn-default" href="{% url 'photoBrestore'        pk=photoB.pk %}"><span>Restore photoB</span></a>
+      <a class="btn btn-default" href="{% url 'photoBdeleteperm'     pk=photoB.pk %}"><span>Delete photoB permanantly</span></a>
+    {% elif activeperson.username == photoB.authorname %}
+      <a class="btn btn-default" href="{% url 'photoBrestore'        pk=photoB.pk %}"><span>Restore photoB</span></a>
+      <a class="btn btn-default" href="{% url 'photoBdeleteperm'     pk=photoB.pk %}"><span>Delete photoB permanantly</span></a>
+    {% endif %}
+      <h2>{{ photoB.title }}</h2>
+          <img src="{{ photoB.cover.url}}", height="300", width="auto", alt="{{ photoB.title }}">
+      </h2>
+  {% endfor %}
+</ul>
+
+</body>
+{% endblock content %}
+{% comment %}
+{% endcomment %}

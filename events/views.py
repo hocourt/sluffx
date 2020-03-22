@@ -63,6 +63,7 @@ def event_list(request, periodsought='current'):
         activeperson.save()
     else:
         activeperson                        = Person.objects.get(username='notloggedin')
+        activeuser                          = User.objects.get(username=activeperson.username)
 
     events_augmented = []
     #stored_event_date = '2000-01-01'
@@ -107,7 +108,7 @@ def event_list(request, periodsought='current'):
         events_augmented.append(event_augmented)
     photos 									= Photo.objects.filter(is_live=True).order_by('-priority')
     context = {'events': events_augmented, 'periodsought':periodsought, 'activeperson': activeperson, 'TITLE': TITLE, \
-	    'site': site, 'notice': notice, 'photos' : photos}
+	    'site': site, 'notice': notice, 'photos' : photos, 'logged_in' : request.user.is_authenticated}
     return render(request, 'events/event_list.html', context)
 
 

@@ -1,13 +1,16 @@
 {% extends "mysite/base.html" %}
 {% block content %}
 
-  {% if activeperson.status == 10 %}
-    <a class="btn btn-default" href="{% url 'contactus' %}" >Contact us</span></a>
-    <h2 class='item'><span class='detail'>{{sitesettings.advert}}</span></h2>
-    <h2 class='item'><span class='detail'>{{sitesettings.contact_info}}</span></h2>
+  {% if logged_in == False %}
+    <h2 class='item'><span class='detail'>{{site.advert}}</span></h2>
+    <a class="btn btn-default" href="{% url 'enquiryinsert' %}"><span>Click here to send us a message</span></a>
+{% comment %}
+    <h2 class='item'><span class='detail'>{{site.contact_info}}</span></h2>
+{% endcomment %}
   {% endif %}
 
 {% comment %}
+    <a class="btn btn-default" href="{% url 'contactus' %}" >Contact us</span></a>
     {% if activeperson.status >= 55 %}
         {% if periodsought == 'current' %}
             <a class="btn btn-default" href="{% url 'noticedelete' %}" >Delete notice</span></a>
@@ -34,9 +37,11 @@
     <a class="btn btn-default" href="{% url 'memberlist' %}"><span>View members/prospectives</span></a>
   {% endif %}
 
+{% comment %}
   {% if activeperson.status > 10 %}
     <p class="top-menu"><small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
   {% endif %}
+{% endcomment %}
 
   {% if activeperson.status >= 40 %}
     <a class="btn btn-default" href="{% url 'memberinsert' %}" > <span>Add a prospective</span></a>
@@ -57,17 +62,23 @@
     <span>Advert</span></a>
   {% endif %}
 
-{% comment %}
-  {% if activeperson.status >= 20 %}
-{% endcomment %}
+  {% if activeperson.status >= 15 %}
     <a class="btn btn-default" href="{% url 'photolist' %}"><span>View photos</span></a>
-{% comment %}
   {% endif %}
-{% endcomment %}
 
-  {% if activeperson.status >= 55 %}
+  {% if activeperson.status == 55 %}
     <a class="btn btn-default" href="{% url 'photolistdeleted' %}"><span>View deleted photos</span></a>
   {% endif %}
+
+{% comment %}
+  {% if activeperson.status >= 15 %}
+    <a class="btn btn-default" href="{% url 'photoBlist' %}"><span>View photoBs</span></a>
+  {% endif %}
+
+  {% if activeperson.status == 55 %}
+    <a class="btn btn-default" href="{% url 'photoBlistdeleted' %}"><span>View deleted photoBs</span></a>
+  {% endif %}
+{% endcomment %}
 
   {% if activeperson.status >= 40 %}
     <a class="btn btn-default" href="{% url 'photoinsert' %}"><span>Add photo</span></a>
@@ -75,9 +86,19 @@
 
 {% comment %}
   {% if activeperson.status >= 40 %}
+    <a class="btn btn-default" href="{% url 'photoBinsert' %}"><span>Add photoB</span></a>
+  {% endif %}
+{% endcomment %}
+
+  {% if activeperson.status >= 40 %}
     <a class="btn btn-default" href="{% url 'enquirylist' %}"><span>View enquiries</span></a>
   {% endif %}
 
+  {% if activeperson.status == 55 %}
+    <a class="btn btn-default" href="{% url 'enquirylistdeleted' %}"><span>View deleted enquiries</span></a>
+  {% endif %}
+
+{% comment %}
   {% if activeperson.status == 10 %}
     <a class="btn btn-default" href="{% url 'contactus' %}"><span>Contact us</span></a>
   {% endif %}
@@ -101,7 +122,7 @@
   {% for x in events %}
 <hr>
     <h2>
-    {% if activeperson.status >= 10 %}
+    {% if logged_in == False %}
         <span class='date'> {{ x.event.e_date|date:"l" }} {{ x.event.e_date|date:"jS F Y" }} </span>
     {% endif %}
     {% if x.event.editable == True %}
@@ -154,7 +175,7 @@
           {% endif %}
       {% endif %}
 
-      {% if activeperson.status >= 55 %}
+      {% if activeperson.status >= 70 %}
           <h2><span class='label'>Author:</h2>
           {% for y in x.first_insert %}
               <h2><span class='label'> </span>
@@ -181,9 +202,16 @@
 <ul>
   {% for photo in photos %}
 	<hr>
-      <h2>{{ photo.title }}</h2>
-      <a class="btn btn-default" href="{% url 'photoupdate' pk=photo.pk %}"><span>Update photo</span></a>
+      <h2 class='item'><span class='detail'>{{photo.title}}</span></h2>
+     {% if activeperson.status >= 55 %}
+      <a class="btn btn-default" href="{% url 'photoauthorupdate' pk=photo.pk %}"><span>Update author</span></a>
+      <a class="btn btn-default" href="{% url 'photopriorityupdate' pk=photo.pk %}"><span>Update priority</span></a>
+      <a class="btn btn-default" href="{% url 'phototitleupdate' pk=photo.pk %}"><span>Update title</span></a>
       <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
+    {% elif activeperson.username == photo.authorname %}
+      <a class="btn btn-default" href="{% url 'phototitleupdate' pk=photo.pk %}"><span>Update title</span></a>
+      <a class="btn btn-default" href="{% url 'photodelete' pk=photo.pk %}"><span>Delete photo</span></a>
+    {% endif %}
 	<h2>
           <img src="{{ photo.cover.url}}", height="auto", width="1170", alt="{{ photo.title }}">
       	</h2>
@@ -193,7 +221,7 @@
   <br><br><br>
 <hr>
   <h2>
-  {% if activeperson.status > 10 %}
+  {% if logged_in == False %}
       <a class="btn btn-default" href="{% url 'unsubscribe' confirmed='no' %}"><span class='background' style="color:black" >Unsubscribe</span></a>
   {% endif %}
   </h2>

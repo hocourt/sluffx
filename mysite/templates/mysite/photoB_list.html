@@ -1,0 +1,33 @@
+{% extends "mysite/base.html" %}
+{% block content %}
+
+<h1 class = "label">Enquiries</h1>
+<br><br>
+    <p>
+    <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >Return to Main Page</span></a>
+    <a class="btn btn-default" href="{% url 'photoBinsert' %}"><span>Add photoB</span></a>
+    </p>
+<br>
+<ul>
+  {% for photoB in photoBs %}
+	<hr>
+      <h2 class="item"><span class='detail'>{{ photoB.title }} </span></h2>
+     {% if activeperson.status >= 55 %}
+      <a class="btn btn-default" href="{% url 'photoBauthorupdate' pk=photoB.pk %}"><span>Update author</span></a>
+      <a class="btn btn-default" href="{% url 'photoBpriorityupdate' pk=photoB.pk %}"><span>Update priority</span></a>
+      <a class="btn btn-default" href="{% url 'photoBtitleupdate' pk=photoB.pk %}"><span>Update title</span></a>
+      <a class="btn btn-default" href="{% url 'photoBdelete' pk=photoB.pk %}"><span>Delete photoB</span></a>
+    {% elif activeperson.username == photoB.authorname %}
+      <a class="btn btn-default" href="{% url 'photoBtitleupdate' pk=photoB.pk %}"><span>Update title</span></a>
+      <a class="btn btn-default" href="{% url 'photoBdelete' pk=photoB.pk %}"><span>Delete photoB</span></a>
+    {% endif %}
+	<h2>
+      <h2 class="item"><span class='detail'>{{ photoB.content }} </span></h2>
+      	</h2>
+  {% endfor %}
+</ul>
+
+</body>
+{% endblock content %}
+{% comment %}
+{% endcomment %}

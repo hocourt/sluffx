@@ -73,7 +73,10 @@
 
     {% if logged_in == False %}
         <p class="top-menu"><small><a href="{% url 'login' %}">Log in</a></small></p>
+    {% else %}
+        <p class="top-menu"><small><a href="{% url 'logout' %}">Log out</a></small></p>
     {% endif %}
+
       <h1 class='label'>{{TITLE}}</h1>
       <hr>
 
