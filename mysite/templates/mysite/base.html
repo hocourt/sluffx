@@ -14,6 +14,7 @@
 
   {% if activeperson.reversevideo == False %}
     hr { color: 'black'; background-color: 'black'}}; font-weight:bold; }
+    hr.end { color: 'black'; background-color: 'black'}}; font-weight:bold; }
     h1,  h1 a, h1:visited, h1 a:visited,  h1 a:active { margin-top: 0; padding: 20px 20px 20px 40px;
       color: {{activeperson.datecolor}}; background-color:{{activeperson.backgroundcolor}}; font-size: xx-large;
       font-weight:bold; font-family: 'Arial'; text-align:center; text-decoration: none; }
@@ -39,6 +40,7 @@
 
     {% else %}     {% comment i.e. this is reverse video %}{% endcomment %}
     hr { color: 'white'; background-color: 'white'}}; font-weight:bold; }
+    hr.end { color: 'white'; background-color: 'black'}}; font-weight:bold; }
     h1,  h1 a, h1:visited, h1 a:visited,  h1 a:active { margin-top: 0; padding: 20px 20px 20px 40px;
       color: {{activeperson.datecolor_rev}}; background-color:{{activeperson.backgroundcolor_rev}}; font-size: xx-large;
       font-weight:bold; font-family: 'Arial'; text-align:center;

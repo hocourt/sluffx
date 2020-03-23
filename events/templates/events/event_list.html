@@ -185,13 +185,11 @@
                   <a>&nbsp;&nbsp;<span class='attendees'> {{ y.name }}&nbsp;{{y.date}}</span></a></h2>
           {% endfor %}
       {% endif %}
-
-
       {% endfor %}
-
-
   </h2>
-
+<br><br>
+<hr class=end>
+<h1 class="label">Pictures of club events</h1>
 {% comment %}
 <h1>Coffeepot photos</h1>
     <a class="btn btn-default" href="{% url 'eventlist' 'current'  %}" >View current events</span></a>
@@ -201,7 +199,7 @@
   {% for photo in photos %}
 	<hr>
       <h2 class='item'><span class='detail'>{{photo.title}}</span></h2>
-     {% if activeperson.status >= 55 %}
+     {% if activeperson.status >= 70 %}
       <a class="btn btn-default" href="{% url 'photoauthorupdate' pk=photo.pk %}"><span>Update author</span></a>
       <a class="btn btn-default" href="{% url 'photopriorityupdate' pk=photo.pk %}"><span>Update priority</span></a>
       <a class="btn btn-default" href="{% url 'phototitleupdate' pk=photo.pk %}"><span>Update title</span></a>
@@ -217,7 +215,6 @@
 </ul>
 
   <br><br><br>
-<hr>
   <h2>
   {% if logged_in == False %}
       <a class="btn btn-default" href="{% url 'unsubscribe' confirmed='no' %}"><span class='background' style="color:black" >Unsubscribe</span></a>
